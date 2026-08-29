@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A local console for prototyping M-PESA Daraja transactions." />
+    <title>Daraja Transact</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Daraja Transact home">
+        <span class="brand-mark" aria-hidden="true">DT</span>
+        <span>
+          <strong>Daraja Transact</strong>
+          <small>Sandbox console</small>
+        </span>
+      </a>
+      <div class="environment"><span aria-hidden="true"></span> Sandbox online</div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">M-PESA DEVELOPER WORKSPACE</p>
+          <h1 id="page-title">Move from API call to confirmed payment.</h1>
+          <p class="hero-copy">Prototype STK Push requests and track callback states from one focused local workspace.</p>
+        </div>
+        <dl class="summary" aria-label="Transaction summary">
+          <div><dt>Success rate</dt><dd>97.4%</dd></div>
+          <div><dt>Processed today</dt><dd>KES 42,850</dd></div>
+          <div><dt>Median callback</dt><dd>2.1 sec</dd></div>
+        </dl>
+      </section>
+
+      <section class="workspace" aria-label="Transaction workspace">
+        <article class="panel request-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="step">NEW REQUEST</p>
+              <h2>Initiate STK Push</h2>
+            </div>
+            <span class="method">POST</span>
+          </div>
+          <form id="payment-form">
+            <label for="phone">Customer phone</label>
+            <div class="phone-field">
+              <span>+254</span>
+              <input id="phone" name="phone" inputmode="numeric" pattern="[0-9]{9}" value="712345678" required aria-describedby="phone-hint" />
+            </div>
+            <small id="phone-hint">Use a 9-digit Kenyan mobile number</small>
+
+            <div class="form-row">
+              <div>
+                <label for="amount">Amount</label>
+                <div class="amount-field"><span>KES</span><input id="amount" name="amount" type="number" min="1" value="250" required /></div>
+              </div>
+              <div>
+                <label for="reference">Reference</label>
+                <input id="reference" name="reference" value="ORDER-1048" required />
+              </div>
+            </div>
+
+            <button type="submit">Send payment request <span aria-hidden="true">&rarr;</span></button>
+            <p class="form-note">This workspace uses simulated sandbox callbacks. No real payment is collected.</p>
+          </form>
+        </article>
+
+        <article class="panel activity-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="step">LIVE ACTIVITY</p>
+              <h2>Recent transactions</h2>
+            </div>
+            <button class="text-button" id="clear-button" type="button">Clear</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Reference</th><th>Phone</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody id="transaction-list">
+                <tr><td><strong>ORDER-1047</strong><small>14:32:08</small></td><td>254 722 *** 091</td><td>KES 1,200</td><td><span class="status success">Completed</span></td></tr>
+                <tr><td><strong>ORDER-1046</strong><small>14:28:41</small></td><td>254 711 *** 625</td><td>KES 850</td><td><span class="status success">Completed</span></td></tr>
+                <tr><td><strong>ORDER-1045</strong><small>14:21:17</small></td><td>254 733 *** 812</td><td>KES 3,400</td><td><span class="status failed">Cancelled</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="empty-state" hidden>No transactions in this session.</div>
+        </article>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+      <span aria-hidden="true">&#10003;</span>
+      <div><strong>Request accepted</strong><small>Waiting for sandbox callback...</small></div>
+    </div>
+  </body>
+</html>
